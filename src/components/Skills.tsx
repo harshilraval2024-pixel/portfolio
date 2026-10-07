@@ -6,7 +6,7 @@ const groups = [
   {
     title: 'Frontend',
     core: true,
-    items: ['React.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bootstrap', 'FullCalendar', 'Drag & Drop'],
+    items: ['React.js', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3', 'Tailwind CSS', 'Bootstrap', 'Drag & Drop', 'Google Maps'],
   },
   { title: 'State & Forms', core: false, items: ['MobX', 'Redux', 'Formik', 'Yup'] },
   { title: 'Backend', core: false, items: ['Node.js', 'Express.js', 'REST APIs', 'JWT Authentication', 'Socket.io'] },
@@ -31,7 +31,7 @@ export function Skills() {
           index="02"
           kicker="Skills"
           title="Stack & tooling"
-          subtitle="Centered on React and TypeScript for the frontend, with Node.js and MySQL behind it. Filter by area."
+          subtitle="React and TypeScript for the frontend, Node.js, Express and MySQL for API work. Filter by area."
         />
 
         <div role="tablist" aria-label="Filter skills" className="mt-10 flex flex-wrap gap-2">

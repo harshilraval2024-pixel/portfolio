@@ -6,7 +6,7 @@ const modules = [
   { name: 'Scheduler', text: 'Drag-and-drop shift booking, staff availability, shift types, day/night and split/sleepover rates, shift buffers and conflict warnings.' },
   { name: 'Timesheets', text: 'Timesheet calendar with shift approval and sign-off, bulk approvals, approval history and custom durations.' },
   { name: 'Client invoicing', text: 'Manual invoice lines, credit notes, partial payments, payable invoices and invoice recalculation.' },
-  { name: 'Client manager', text: 'Client rates and settings, bulk updates, and a copy-settings tool with history.' },
+  { name: 'Client manager', text: 'Client rates and settings, bulk updates, CSV import with column mapping, and a copy-settings tool with history.' },
   { name: 'Staff manager', text: 'Staff profiles, pay bands, training certificates and printable profiles.' },
   { name: 'Reports', text: 'Staff data, staff payments, compliance, DBS and shift booking reports with filters and downloads.' },
   { name: 'Chat', text: 'Staff–admin chat interface with live updates delivered through Ably.' },
