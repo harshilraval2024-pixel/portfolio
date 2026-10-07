@@ -7,7 +7,7 @@ export function Footer() {
             Harshil Raval
           </p>
           <p className="mt-1 font-mono-strict text-xs text-zinc-500 dark:text-zinc-600">
-            © {new Date().getFullYear()} · Crafted with React, Tailwind & Motion
+            © {new Date().getFullYear()} · Built with React, Tailwind & Motion · Press Ctrl/⌘ K to navigate
           </p>
         </div>
         <div className="flex items-center gap-2">

@@ -1,32 +1,37 @@
 import { motion } from 'framer-motion'
-import { Code2, Gauge, Layers, Radio } from 'lucide-react'
+import { CalendarClock, GraduationCap, Layers, Radio, Receipt } from 'lucide-react'
 import { SectionHeading } from './SectionHeading'
 
 const highlights = [
   {
     icon: Layers,
-    title: 'Full-stack integration',
-    body: 'Cohesive features across frontend and backend—fewer handoffs, faster delivery.',
-    span: 'sm:col-span-2 lg:col-span-2 lg:row-span-1',
+    title: 'Frontend architecture',
+    body: 'React, TypeScript and MobX with reusable hooks and shared components, cutting duplication by about 40% in a large codebase.',
+    span: 'sm:col-span-2 lg:col-span-2',
   },
   {
-    icon: Gauge,
-    title: 'Performance & quality',
-    body: 'Clean architecture and measurable UX wins.',
+    icon: CalendarClock,
+    title: 'Scheduling & calendars',
+    body: 'Drag-and-drop booking, availability, shift types and conflict warnings.',
     span: 'sm:col-span-1',
   },
   {
     icon: Radio,
-    title: 'Real-time',
-    body: 'Live data, sockets, and event-driven UIs.',
+    title: 'Real-time interfaces',
+    body: 'Live updates and chat with Ably and Socket.io.',
     span: 'sm:col-span-1',
   },
   {
-    icon: Code2,
-    title: '4+ years',
-    body: 'Production web apps at scale.',
-    span: 'sm:col-span-2 lg:col-span-2',
+    icon: Receipt,
+    title: 'Business workflows',
+    body: 'Invoicing, credit notes, pay rates and exportable reports for care agencies.',
+    span: 'sm:col-span-2 lg:col-span-4',
   },
+] as const
+
+const education = [
+  { school: 'Sigma Institute of Engineering', degree: 'Bachelor of Information Technology', years: '2019 – 2022', score: 'CGPA 8.17' },
+  { school: 'Government Polytechnic Gandhinagar', degree: 'Diploma in Information Technology', years: '2016 – 2019', score: 'CGPA 7.76' },
 ] as const
 
 export function About() {
@@ -39,8 +44,8 @@ export function About() {
         <SectionHeading
           index="01"
           kicker="About"
-          title="Reliable products, maintained with care"
-          subtitle="I ship web applications with an emphasis on frontend and backend integration, performance, clean code, and real-time systems that stay maintainable as teams grow."
+          title="Interfaces that stay fast as products grow"
+          subtitle="4+ years building production web applications with React, TypeScript, Node.js and MySQL. For the last three years I have built the frontend of a multi-tenant workforce platform for care agencies."
         />
 
         <div className="mt-14 grid auto-rows-fr gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
@@ -69,6 +74,30 @@ export function About() {
               </motion.article>
             )
           })}
+        </div>
+
+        <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:gap-4">
+          {education.map((e, i) => (
+            <motion.div
+              key={e.school}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.06 * i }}
+              className="flex items-start gap-4 rounded-2xl border border-zinc-200/80 bg-white/60 p-5 dark:border-zinc-800/80 dark:bg-zinc-900/30"
+            >
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
+                <GraduationCap className="h-5 w-5" strokeWidth={1.75} />
+              </span>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-zinc-900 dark:text-white">{e.degree}</p>
+                <p className="text-sm text-zinc-600 dark:text-zinc-400">{e.school}</p>
+                <p className="mt-1 font-mono-strict text-xs text-zinc-500">
+                  {e.years} · {e.score}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion'
-import { Check, Copy, Mail, MapPin, Phone, Send } from 'lucide-react'
+import { Check, Copy, Download, Mail, MapPin, Phone, Send } from 'lucide-react'
 import { type FormEvent, useState } from 'react'
+import { profile } from '../data/profile'
 import { SectionHeading } from './SectionHeading'
 
-const EMAIL = 'harshilraval2015@gmail.com'
+const EMAIL = profile.email
 
 export function Contact() {
   const [status, setStatus] = useState<'idle' | 'sent'>('idle')
@@ -80,11 +81,20 @@ export function Contact() {
                   </button>
                 </div>
                 <a
-                  href="tel:+919737248676"
+                  href={profile.resume}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-3 rounded-xl border border-zinc-200/60 bg-white/80 px-4 py-3 text-sm font-medium transition-colors hover:border-emerald-500/40 dark:border-zinc-700/80 dark:bg-zinc-950/50"
+                >
+                  <Download className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+                  Download résumé (PDF)
+                </a>
+                <a
+                  href={`tel:${profile.phone}`}
                   className="flex items-center gap-3 rounded-xl border border-zinc-200/60 bg-white/80 px-4 py-3 text-sm font-medium transition-colors hover:border-violet-400/40 dark:border-zinc-700 dark:bg-zinc-950/50"
                 >
                   <Phone className="h-4 w-4 shrink-0 text-violet-600 dark:text-violet-400" />
-                  +91-9737248676
+                  {profile.phoneDisplay}
                 </a>
               </div>
             </div>
@@ -164,8 +174,7 @@ export function Contact() {
               ) : null}
             </div>
             <p className="relative mt-4 font-mono-strict text-[10px] leading-relaxed text-zinc-500 dark:text-zinc-600">
-              Uses mailto with a pre-filled message. Swap for Formspree, Resend, or your API on
-              deploy.
+              Opens your email app with the message pre-filled, so nothing is stored on this site.
             </p>
           </motion.form>
         </div>

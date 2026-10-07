@@ -11,6 +11,16 @@ html {
   scroll-behavior: smooth;
 }
 
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -27,6 +37,21 @@ body {
 }
 
 @layer utilities {
+  .spotlight-glow {
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 50%),
+      rgb(139 92 246 / 0.10),
+      transparent 60%
+    );
+  }
+  .dark .spotlight-glow {
+    background: radial-gradient(
+      420px circle at var(--mx, 50%) var(--my, 50%),
+      rgb(167 139 250 / 0.12),
+      transparent 60%
+    );
+  }
+
   .font-mono-strict {
     font-family: var(--font-mono);
   }

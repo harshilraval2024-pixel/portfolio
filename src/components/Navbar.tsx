@@ -1,17 +1,15 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, Moon, Sun, X } from 'lucide-react'
+import { Command, Download, Menu, Moon, Sun, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import { profile, sections } from '../data/profile'
+import { useScrollSpy } from '../hooks/useScrollSpy'
 
-const links = [
-  { href: '#about', label: 'About' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#contact', label: 'Contact' },
-] as const
+const links = sections.map((x) => ({ href: `#${x.id}`, id: x.id, label: x.label }))
+const ids = sections.map((x) => x.id)
 
-export function Navbar() {
+export function Navbar({ onOpenPalette }: { onOpenPalette: () => void }) {
+  const active = useScrollSpy(ids)
   const { theme, toggleTheme } = useTheme()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -57,14 +55,41 @@ export function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="rounded-full px-3.5 py-2 text-[13px] font-medium text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white"
+              className={`relative rounded-full px-3.5 py-2 text-[13px] font-medium transition-colors ${
+                active === link.id
+                  ? 'text-zinc-900 dark:text-white'
+                  : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+              }`}
             >
+              {active === link.id && (
+                <motion.span
+                  layoutId="nav-pill"
+                  transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  className="absolute inset-0 -z-10 rounded-full bg-zinc-100 dark:bg-zinc-800"
+                />
+              )}
               {link.label}
             </a>
           ))}
         </div>
 
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onOpenPalette}
+            aria-label="Open command palette"
+            className="hidden h-10 items-center gap-2 rounded-full border border-zinc-200/80 bg-white/90 px-3 font-mono-strict text-[11px] font-semibold text-zinc-600 shadow-sm backdrop-blur transition-all hover:border-violet-400/50 hover:text-violet-700 dark:border-zinc-700 dark:bg-zinc-900/90 dark:text-zinc-400 dark:hover:text-violet-300 lg:inline-flex"
+          >
+            <Command className="h-3.5 w-3.5" /> K
+          </button>
+          <a
+            href={profile.resume}
+            target="_blank"
+            rel="noreferrer"
+            className="hidden h-10 items-center gap-2 rounded-full bg-zinc-900 px-4 text-[13px] font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 dark:bg-white dark:text-zinc-950 sm:inline-flex"
+          >
+            <Download className="h-3.5 w-3.5" /> Résumé
+          </a>
           <button
             type="button"
             onClick={toggleTheme}
@@ -120,6 +145,17 @@ export function Navbar() {
                   </a>
                 </motion.li>
               ))}
+              <li>
+                <a
+                  href={profile.resume}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={closeMenu}
+                  className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-zinc-900 px-4 py-3 text-sm font-semibold text-white dark:bg-white dark:text-zinc-950"
+                >
+                  <Download className="h-4 w-4" /> Download résumé
+                </a>
+              </li>
             </ul>
           </motion.div>
         )}
