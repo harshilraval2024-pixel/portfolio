@@ -1,6 +1,30 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import {
+  CalendarClock,
+  ClipboardList,
+  FileBarChart,
+  FormInput,
+  MessageSquare,
+  Receipt,
+  Timer,
+  UserCog,
+  Users,
+  type LucideIcon,
+} from 'lucide-react'
 import { useState } from 'react'
 import { SectionHeading } from './SectionHeading'
+
+const moduleIcons: Record<string, LucideIcon> = {
+  Scheduler: CalendarClock,
+  Timesheets: Timer,
+  'Client invoicing': Receipt,
+  'Client manager': Users,
+  'Staff manager': UserCog,
+  Reports: FileBarChart,
+  Chat: MessageSquare,
+  Recruitment: ClipboardList,
+  'Form builder': FormInput,
+}
 
 const modules = [
   { name: 'Scheduler', text: 'Drag-and-drop shift booking, staff availability, shift types, day/night and split/sleepover rates, shift buffers and conflict warnings.' },
@@ -105,6 +129,10 @@ function ModuleExplorer() {
                 : 'border-zinc-200 bg-zinc-50 text-zinc-700 hover:border-violet-400/50 dark:border-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-300'
             }`}
           >
+            {(() => {
+              const Icon = moduleIcons[m.name]
+              return Icon ? <Icon className="mr-1.5 inline h-3.5 w-3.5 -translate-y-px" strokeWidth={2} /> : null
+            })()}
             {m.name}
           </button>
         ))}

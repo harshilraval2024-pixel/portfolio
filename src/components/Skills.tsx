@@ -1,6 +1,16 @@
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion'
+import { Database, FormInput, Layers, Monitor, Radio, Server, Wrench, type LucideIcon } from 'lucide-react'
 import { useState } from 'react'
 import { SectionHeading } from './SectionHeading'
+
+const icons: Record<string, LucideIcon> = {
+  Frontend: Monitor,
+  'State & Forms': FormInput,
+  Backend: Server,
+  Database: Database,
+  'Real-time & AI': Radio,
+  Tooling: Wrench,
+}
 
 const groups = [
   {
@@ -76,7 +86,13 @@ export function Skills() {
                   }`}
                 >
                   <div className="flex items-baseline justify-between gap-2">
-                    <h3 className="font-mono-strict text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                    <h3 className="flex items-center gap-2.5 font-mono-strict text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500/15 to-emerald-500/15 text-violet-600 dark:text-violet-400">
+                        {(() => {
+                          const Icon = icons[group.title] ?? Layers
+                          return <Icon className="h-4 w-4" strokeWidth={1.75} />
+                        })()}
+                      </span>
                       {group.title}
                     </h3>
                     {group.core && (

@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
-import { ArrowDownRight, ArrowRight, Download, Mail, Sparkles } from 'lucide-react'
+import { ArrowDownRight, ArrowRight, Briefcase, CalendarCheck, Download, GitCommitHorizontal, Layers, Mail, Sparkles } from 'lucide-react'
 import { profile } from '../data/profile'
 import { CountUp } from './CountUp'
+import { ProfileCard } from './ProfileCard'
 import { Typewriter } from './Typewriter'
 
 const container = {
@@ -25,12 +26,6 @@ const item = {
   },
 }
 
-const bentoItems = [
-  { label: 'Stack', value: 'React · TS · MobX' },
-  { label: 'Focus', value: 'Scheduling · Real-time' },
-  { label: 'Experience', value: '4+ years shipping' },
-] as const
-
 const phrases = [
   'scheduling calendars with drag & drop',
   'invoicing and reporting screens',
@@ -39,10 +34,10 @@ const phrases = [
 ] as const
 
 const stats = [
-  { to: 4, suffix: '+', label: 'Years building for the web' },
-  { to: 2000, suffix: '+', label: 'Commits to one production React app' },
-  { to: 30, suffix: '%', label: 'Fewer scheduling conflicts' },
-  { to: 40, suffix: '%', label: 'Less duplicated code' },
+  { to: 4, suffix: '+', label: 'Years building for the web', icon: Briefcase },
+  { to: 2000, suffix: '+', label: 'Commits to one production React app', icon: GitCommitHorizontal },
+  { to: 30, suffix: '%', label: 'Fewer scheduling conflicts', icon: CalendarCheck },
+  { to: 40, suffix: '%', label: 'Less duplicated code', icon: Layers },
 ] as const
 
 export function Hero() {
@@ -122,7 +117,7 @@ export function Hero() {
                 className="inline-flex items-center gap-2 rounded-full px-4 py-3.5 text-sm font-semibold text-zinc-600 transition-colors hover:text-violet-700 dark:text-zinc-400 dark:hover:text-violet-300"
               >
                 <Download className="h-4 w-4" />
-                Résumé
+                Resume
               </a>
             </motion.div>
 
@@ -146,56 +141,7 @@ export function Hero() {
             transition={{ duration: 0.55, delay: 0.2 }}
             className="relative lg:col-span-5"
           >
-            <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-violet-500/10 via-transparent to-emerald-500/10 blur-2xl dark:from-violet-500/15 dark:to-emerald-500/10" />
-            <div className="relative overflow-hidden rounded-2xl border border-zinc-200/80 bg-white/80 shadow-xl shadow-zinc-900/5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/60 dark:shadow-black/40">
-              <div className="flex items-center gap-2 border-b border-zinc-100 px-4 py-3 dark:border-zinc-800">
-                <span className="h-2.5 w-2.5 rounded-full bg-red-400/90" />
-                <span className="h-2.5 w-2.5 rounded-full bg-amber-400/90" />
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/90" />
-                <span className="ml-2 font-mono-strict text-[10px] text-zinc-400">
-                  profile.tsx
-                </span>
-              </div>
-              <div className="space-y-3 p-5 sm:p-6">
-                <pre className="font-mono-strict text-[11px] leading-relaxed text-zinc-600 sm:text-xs dark:text-zinc-400">
-                  <span className="text-violet-600 dark:text-violet-400">const</span>{' '}
-                  <span className="text-emerald-600 dark:text-emerald-400">developer</span>
-                  {' = '}
-                  <span className="text-zinc-800 dark:text-zinc-200">{'{'}</span>
-                  {'\n'}
-                  {'  '}<span className="text-zinc-500">role:</span>{' '}
-                  <span className="text-amber-700 dark:text-amber-400">
-                    &apos;Full-stack · frontend-first&apos;
-                  </span>
-                  ,{'\n'}
-                  {'  '}<span className="text-zinc-500">focus:</span>{' '}
-                  <span className="text-amber-700 dark:text-amber-400">
-                    [&apos;scheduler&apos;, &apos;invoicing&apos;, &apos;realtime&apos;]
-                  </span>
-                  ,{'\n'}
-                  <span className="text-zinc-800 dark:text-zinc-200">{'}'}</span>
-                </pre>
-                <div className="grid gap-2 sm:grid-cols-3">
-                  {bentoItems.map((cell, i) => (
-                    <motion.div
-                      key={cell.label}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.35 + i * 0.08 }}
-                      whileHover={{ scale: 1.02 }}
-                      className="rounded-xl border border-zinc-100 bg-zinc-50/80 p-3 dark:border-zinc-800 dark:bg-zinc-950/50"
-                    >
-                      <p className="font-mono-strict text-[10px] uppercase tracking-wider text-zinc-500">
-                        {cell.label}
-                      </p>
-                      <p className="mt-1 text-xs font-semibold text-zinc-800 dark:text-zinc-200">
-                        {cell.value}
-                      </p>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <ProfileCard />
           </motion.div>
         </div>
 
@@ -209,6 +155,7 @@ export function Hero() {
           {stats.map((st) => (
             <div key={st.label} className="bg-white/80 p-5 backdrop-blur dark:bg-zinc-950/80 sm:p-6">
               <dt className="sr-only">{st.label}</dt>
+              <st.icon className="mb-3 h-5 w-5 text-violet-500 dark:text-violet-400" strokeWidth={1.75} aria-hidden />
               <dd className="text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
                 <span className="text-gradient">
                   <CountUp to={st.to} suffix={st.suffix} />

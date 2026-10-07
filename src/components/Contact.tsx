@@ -87,7 +87,7 @@ export function Contact() {
                   className="flex items-center gap-3 rounded-xl border border-zinc-200/60 bg-white/80 px-4 py-3 text-sm font-medium transition-colors hover:border-emerald-500/40 dark:border-zinc-700/80 dark:bg-zinc-950/50"
                 >
                   <Download className="h-4 w-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
-                  Download résumé (PDF)
+                  Download resume (PDF)
                 </a>
                 <a
                   href={`tel:${profile.phone}`}

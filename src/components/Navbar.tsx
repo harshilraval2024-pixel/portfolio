@@ -3,6 +3,7 @@ import { Command, Download, Menu, Moon, Sun, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTheme } from '../context/ThemeContext'
 import { profile, sections } from '../data/profile'
+import { Logo } from './Logo'
 import { useScrollSpy } from '../hooks/useScrollSpy'
 
 const links = sections.map((x) => ({ href: `#${x.id}`, id: x.id, label: x.label }))
@@ -37,10 +38,7 @@ export function Navbar({ onOpenPalette }: { onOpenPalette: () => void }) {
           href="#top"
           className="group relative z-10 flex shrink-0 items-center gap-2.5 rounded-full py-1.5 pl-1.5 pr-3 text-sm font-semibold tracking-tight text-zinc-900 transition-colors dark:text-zinc-50"
         >
-          <span className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-zinc-900 text-xs font-bold text-white ring-2 ring-white/20 dark:bg-white dark:text-zinc-900 dark:ring-zinc-800">
-            <span className="absolute inset-0 bg-gradient-to-br from-emerald-400/30 to-violet-500/30 opacity-0 transition-opacity group-hover:opacity-100 dark:from-emerald-400/20 dark:to-violet-500/20" />
-            <span className="relative">HR</span>
-          </span>
+          <Logo className="h-9 w-9 shrink-0 transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110" />
           <span className="hidden font-medium sm:inline">Harshil Raval</span>
         </a>
 
@@ -88,7 +86,7 @@ export function Navbar({ onOpenPalette }: { onOpenPalette: () => void }) {
             rel="noreferrer"
             className="hidden h-10 items-center gap-2 rounded-full bg-zinc-900 px-4 text-[13px] font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 dark:bg-white dark:text-zinc-950 sm:inline-flex"
           >
-            <Download className="h-3.5 w-3.5" /> Résumé
+            <Download className="h-3.5 w-3.5" /> Resume
           </a>
           <button
             type="button"
@@ -153,7 +151,7 @@ export function Navbar({ onOpenPalette }: { onOpenPalette: () => void }) {
                   onClick={closeMenu}
                   className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-zinc-900 px-4 py-3 text-sm font-semibold text-white dark:bg-white dark:text-zinc-950"
                 >
-                  <Download className="h-4 w-4" /> Download résumé
+                  <Download className="h-4 w-4" /> Download resume
                 </a>
               </li>
             </ul>

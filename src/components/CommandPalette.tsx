@@ -23,7 +23,7 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
       })),
       {
         id: 'resume',
-        label: 'Download résumé (PDF)',
+        label: 'Download resume (PDF)',
         hint: 'Action',
         icon: Download,
         run: () => window.open(profile.resume, '_blank'),
