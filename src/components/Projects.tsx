@@ -12,7 +12,6 @@ interface Project {
   summary: string
   highlights: readonly string[]
   stack: readonly string[]
-  gradient: string
   icon: LucideIcon
 }
 
@@ -34,7 +33,6 @@ const projects: Project[] = [
       'Applied each agency\'s theme colors, name and logo across the calendars and app.',
     ],
     stack: ['React', 'TypeScript', 'MobX', 'Ably', 'Formik', 'Drag & Drop'],
-    gradient: 'from-violet-600 via-fuchsia-500 to-cyan-500',
     icon: Building2,
   },
   {
@@ -49,7 +47,6 @@ const projects: Project[] = [
       'Built the visit scheduler with drag-and-drop visit planning and Google Maps staff location.',
     ],
     stack: ['React', 'TypeScript', 'Google Maps', 'Drag & Drop'],
-    gradient: 'from-emerald-600 via-teal-500 to-cyan-500',
     icon: CalendarClock,
   },
   {
@@ -63,7 +60,6 @@ const projects: Project[] = [
       'Designed a simple, step-by-step setup for integrating chat into websites.',
     ],
     stack: ['Socket.io', 'Node.js', 'MySQL'],
-    gradient: 'from-violet-600 via-purple-500 to-indigo-600',
     icon: Bot,
   },
   {
@@ -77,7 +73,6 @@ const projects: Project[] = [
       'Streamlined user and role management, enhancing security and user experience through dynamic interface updates.',
     ],
     stack: ['React', 'Node.js', 'MySQL', 'JWT'],
-    gradient: 'from-emerald-600 via-teal-500 to-cyan-600',
     icon: Shield,
   },
   {
@@ -88,7 +83,6 @@ const projects: Project[] = [
     summary: 'A visualization tool for blockchain member structures.',
     highlights: ['Developed a dynamic tree view for blockchain member hierarchies, with auto-updating data.'],
     stack: ['Tree view', 'Auto-updating data'],
-    gradient: 'from-amber-500 via-orange-500 to-rose-600',
     icon: Network,
   },
 ]
@@ -99,7 +93,7 @@ const tabs = [
   { id: 'earlier', label: 'Earlier work' },
 ] as const
 
-const PREVIEW = 3
+const PREVIEW = 2
 
 function Spotlight({ children }: { children: React.ReactNode }) {
   const onMove = (e: MouseEvent<HTMLDivElement>) => {
@@ -113,6 +107,21 @@ function Spotlight({ children }: { children: React.ReactNode }) {
     </div>
   )
 }
+
+const accent = {
+  '20x': {
+    tile: 'from-violet-600 to-indigo-500',
+    pill: 'bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300',
+    dot: 'bg-violet-500',
+    hover: 'hover:border-violet-300/70 dark:hover:border-violet-500/40',
+  },
+  earlier: {
+    tile: 'from-zinc-700 to-zinc-500 dark:from-zinc-600 dark:to-zinc-400',
+    pill: 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300',
+    dot: 'bg-zinc-400',
+    hover: 'hover:border-zinc-400/70 dark:hover:border-zinc-500/60',
+  },
+} as const
 
 export function Projects() {
   const [tab, setTab] = useState<(typeof tabs)[number]['id']>('all')
@@ -133,36 +142,40 @@ export function Projects() {
           <Showcase />
         </div>
 
-        <div role="tablist" aria-label="Filter projects" className="mt-10 flex flex-wrap gap-2">
-          {tabs.map((t) => (
-            <button
-              key={t.id}
-              role="tab"
-              aria-selected={tab === t.id}
-              type="button"
-              onClick={() => setTab(t.id)}
-              className={`relative rounded-full border px-4 py-2 font-mono-strict text-[11px] font-semibold uppercase tracking-wider transition-colors ${
-                tab === t.id
-                  ? 'border-transparent text-white dark:text-zinc-950'
-                  : 'border-zinc-200 bg-white/70 text-zinc-600 hover:border-violet-400/50 dark:border-zinc-700 dark:bg-zinc-900/50 dark:text-zinc-400'
-              }`}
-            >
-              {tab === t.id && (
-                <motion.span
-                  layoutId="project-pill"
-                  transition={{ type: 'spring', stiffness: 400, damping: 32 }}
-                  className="absolute inset-0 rounded-full bg-zinc-900 dark:bg-white"
-                />
-              )}
-              <span className="relative">{t.label}</span>
-            </button>
-          ))}
+        <div className="mt-14 flex flex-wrap items-end justify-between gap-4">
+          <h3 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-white">More work</h3>
+          <div role="tablist" aria-label="Filter projects" className="flex flex-wrap gap-2">
+            {tabs.map((t) => (
+              <button
+                key={t.id}
+                role="tab"
+                aria-selected={tab === t.id}
+                type="button"
+                onClick={() => setTab(t.id)}
+                className={`relative rounded-full border px-4 py-2 font-mono-strict text-[11px] font-semibold uppercase tracking-wider transition-colors ${
+                  tab === t.id
+                    ? 'border-transparent text-white dark:text-zinc-950'
+                    : 'border-zinc-200 bg-white/70 text-zinc-600 hover:border-violet-400/50 dark:border-zinc-700 dark:bg-zinc-900/50 dark:text-zinc-400'
+                }`}
+              >
+                {tab === t.id && (
+                  <motion.span
+                    layoutId="project-pill"
+                    transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                    className="absolute inset-0 rounded-full bg-zinc-900 dark:bg-white"
+                  />
+                )}
+                <span className="relative">{t.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
-        <motion.div layout className="mt-10 flex flex-col gap-8 lg:gap-10">
+        <motion.div layout className="mt-6 grid items-start gap-5 md:grid-cols-2">
           <AnimatePresence mode="popLayout">
             {list.map((project, index) => {
               const Icon = project.icon
+              const a = accent[project.group]
               const expanded = !!open[project.title]
               const shown = expanded ? project.highlights : project.highlights.slice(0, PREVIEW)
               const hidden = project.highlights.length - PREVIEW
@@ -170,102 +183,82 @@ export function Projects() {
                 <motion.article
                   layout
                   key={project.title}
-                  initial={{ opacity: 0, y: 28 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.97 }}
-                  transition={{ duration: 0.4 }}
-                  whileHover={{ y: -4 }}
-                  className="group relative"
+                  transition={{ duration: 0.35 }}
+                  whileHover={{ y: -3 }}
+                  className="group"
                 >
-                  <div
-                    className="project-card-ring absolute -inset-[1px] rounded-[1.35rem] opacity-60 blur-[1px] transition-opacity duration-500 group-hover:opacity-100"
-                    aria-hidden
-                  />
                   <Spotlight>
-                    <div className="relative overflow-hidden rounded-3xl border border-zinc-200/90 bg-white/90 shadow-xl shadow-zinc-900/[0.06] backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-900/85 dark:shadow-black/40">
-                      <div className="spotlight-glow pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                      <div
-                        className={`relative z-10 h-36 overflow-hidden bg-gradient-to-br ${project.gradient} animate-project-gradient sm:h-40`}
-                      >
-                        <motion.div
-                          className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-white/10 blur-3xl"
-                          animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
-                          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                        />
-                        <div className="relative flex h-full flex-col justify-between p-6 sm:flex-row sm:items-end sm:p-8">
-                          <div className="flex items-start gap-4">
-                            <motion.span
-                              whileHover={{ scale: 1.08, rotate: -4 }}
-                              className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 text-white shadow-lg ring-1 ring-white/30 backdrop-blur-md"
-                            >
-                              <Icon className="h-7 w-7" strokeWidth={1.5} />
-                            </motion.span>
-                            <div>
-                              <p className="font-mono-strict text-[11px] font-semibold uppercase tracking-[0.25em] text-white/90">
+                    <div
+                      className={`relative overflow-hidden rounded-2xl border border-zinc-200/90 bg-white/90 p-6 shadow-lg shadow-zinc-900/[0.05] backdrop-blur-md transition-colors dark:border-zinc-800 dark:bg-zinc-900/85 dark:shadow-black/30 ${a.hover}`}
+                    >
+                      <div className="spotlight-glow pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                      <div className="relative">
+                        <div className="flex items-start gap-4">
+                          <motion.span
+                            whileHover={{ scale: 1.08, rotate: -4 }}
+                            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${a.tile} text-white shadow-md`}
+                          >
+                            <Icon className="h-6 w-6" strokeWidth={1.6} />
+                          </motion.span>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center justify-between gap-3">
+                              <span className={`rounded-full px-2.5 py-0.5 font-mono-strict text-[10px] font-semibold uppercase tracking-wider ${a.pill}`}>
                                 {project.brand}
-                              </p>
-                              <h3 className="mt-1 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                                {project.title}
-                              </h3>
-                              <p className="mt-1 max-w-xl text-sm font-medium text-white/85 sm:text-base">
-                                {project.subtitle}
-                              </p>
+                              </span>
+                              <span className="font-mono-strict text-[10px] tabular-nums text-zinc-400">
+                                {String(index + 1).padStart(2, '0')} / {String(list.length).padStart(2, '0')}
+                              </span>
                             </div>
+                            <h4 className="mt-2 text-xl font-semibold tracking-tight text-zinc-900 dark:text-white">{project.title}</h4>
+                            <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">{project.subtitle}</p>
                           </div>
-                          <span className="mt-4 inline-flex self-start rounded-full bg-black/20 px-3 py-1 font-mono-strict text-[10px] font-bold tabular-nums text-white/95 ring-1 ring-white/25 backdrop-blur-sm">
-                            {String(index + 1).padStart(2, '0')} / {String(list.length).padStart(2, '0')}
-                          </span>
                         </div>
-                      </div>
 
-                      <div className="relative z-10 grid gap-8 p-6 sm:p-8 lg:grid-cols-5 lg:gap-10">
-                        <div className="lg:col-span-2">
-                          <p className="text-base leading-relaxed text-zinc-600 dark:text-zinc-400">{project.summary}</p>
-                          <ul className="mt-5 flex flex-wrap gap-2">
-                            {project.stack.map((t) => (
-                              <motion.li key={t} whileHover={{ scale: 1.05 }} transition={{ type: 'spring', stiffness: 400, damping: 20 }}>
-                                <span className="inline-flex rounded-lg border border-zinc-200/90 bg-zinc-50 px-3 py-1.5 font-mono-strict text-[11px] font-semibold uppercase tracking-wider text-zinc-700 dark:border-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-300">
-                                  {t}
-                                </span>
+                        <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{project.summary}</p>
+
+                        <ul className="mt-4 flex flex-wrap gap-1.5">
+                          {project.stack.map((t) => (
+                            <li
+                              key={t}
+                              className="rounded-md border border-zinc-200/90 bg-zinc-50 px-2 py-1 font-mono-strict text-[10px] font-semibold uppercase tracking-wider text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800/60 dark:text-zinc-300"
+                            >
+                              {t}
+                            </li>
+                          ))}
+                        </ul>
+
+                        <ul className="mt-5 space-y-2 border-t border-zinc-100 pt-4 dark:border-zinc-800">
+                          <AnimatePresence initial={false}>
+                            {shown.map((line) => (
+                              <motion.li
+                                key={line}
+                                layout
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.25 }}
+                                className="flex gap-2.5 overflow-hidden text-[13px] leading-relaxed text-zinc-600 dark:text-zinc-400"
+                              >
+                                <span className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${a.dot}`} aria-hidden />
+                                {line}
                               </motion.li>
                             ))}
-                          </ul>
-                        </div>
-
-                        <div className="lg:col-span-3">
-                          <ul className="space-y-3">
-                            <AnimatePresence initial={false}>
-                              {shown.map((line) => (
-                                <motion.li
-                                  key={line}
-                                  layout
-                                  initial={{ opacity: 0, x: -12 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  exit={{ opacity: 0, height: 0 }}
-                                  transition={{ duration: 0.3 }}
-                                  className="flex gap-3 rounded-xl border border-zinc-100 bg-zinc-50/80 px-4 py-3 transition-colors hover:border-violet-200/80 hover:bg-violet-50/40 dark:border-zinc-800/80 dark:bg-zinc-950/40 dark:hover:border-violet-500/30 dark:hover:bg-violet-950/20"
-                                >
-                                  <span
-                                    className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-gradient-to-br from-violet-500 to-emerald-400 shadow-sm shadow-violet-500/30"
-                                    aria-hidden
-                                  />
-                                  <span className="text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">{line}</span>
-                                </motion.li>
-                              ))}
-                            </AnimatePresence>
-                          </ul>
-                          {hidden > 0 && (
-                            <button
-                              type="button"
-                              onClick={() => setOpen((o) => ({ ...o, [project.title]: !expanded }))}
-                              aria-expanded={expanded}
-                              className="mt-4 inline-flex items-center gap-1.5 font-mono-strict text-[11px] font-semibold uppercase tracking-wider text-violet-700 hover:underline dark:text-violet-300"
-                            >
-                              {expanded ? 'Show less' : `Show ${hidden} more`}
-                              <ChevronDown className={`h-3.5 w-3.5 transition-transform ${expanded ? 'rotate-180' : ''}`} />
-                            </button>
-                          )}
-                        </div>
+                          </AnimatePresence>
+                        </ul>
+                        {hidden > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => setOpen((o) => ({ ...o, [project.title]: !expanded }))}
+                            aria-expanded={expanded}
+                            className="mt-3 inline-flex items-center gap-1.5 font-mono-strict text-[11px] font-semibold uppercase tracking-wider text-violet-700 hover:underline dark:text-violet-300"
+                          >
+                            {expanded ? 'Show less' : `Show ${hidden} more`}
+                            <ChevronDown className={`h-3.5 w-3.5 transition-transform ${expanded ? 'rotate-180' : ''}`} />
+                          </button>
+                        )}
                       </div>
                     </div>
                   </Spotlight>

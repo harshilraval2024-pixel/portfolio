@@ -230,3 +230,79 @@ body {
     }
   }
 }
+
+/* Per-letter gradient: JS sets background-size/position so the gradient runs across the whole line. */
+.letter-gradient {
+  background-image: linear-gradient(135deg, rgb(52 211 153) 0%, rgb(124 58 237) 45%, rgb(56 189 248) 100%);
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.dark .letter-gradient {
+  background-image: linear-gradient(135deg, rgb(110 231 183) 0%, rgb(196 181 253) 45%, rgb(125 211 252) 100%);
+}
+
+/* Flashlight reading lens. */
+.flash {
+  position: relative;
+  display: block;
+}
+.flash-base {
+  display: block;
+  transition: opacity 0.3s ease;
+}
+.flash-lit {
+  position: absolute;
+  inset: 0;
+  display: block;
+  color: rgb(24 24 27);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  -webkit-mask-image: radial-gradient(150px circle at var(--fx, 50%) var(--fy, 50%), #000 35%, transparent 100%);
+  mask-image: radial-gradient(150px circle at var(--fx, 50%) var(--fy, 50%), #000 35%, transparent 100%);
+}
+.dark .flash-lit {
+  color: #fff;
+}
+.flash:hover .flash-base {
+  opacity: 0.4;
+}
+.flash:hover .flash-lit {
+  opacity: 1;
+}
+
+/* Inertial cursor ring. */
+.cursor-ring {
+  border: 1.5px solid rgb(124 58 237 / 0.75);
+  background: rgb(167 139 250 / 0.06);
+  transition: opacity 0.2s ease, background-color 0.25s ease, border-color 0.25s ease;
+}
+.cursor-ring[data-mode='text'] {
+  border-color: rgb(124 58 237 / 0.3);
+  background: rgb(167 139 250 / 0.1);
+}
+.cursor-ring[data-mode='link'] {
+  background: rgb(124 58 237 / 0.16);
+}
+.dark .cursor-ring {
+  border-color: rgb(196 181 253 / 0.8);
+}
+.dark .cursor-ring[data-mode='text'] {
+  border-color: rgb(196 181 253 / 0.3);
+}
+@media (pointer: coarse) {
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* Showcase: the page capture scrolls inside the browser frame while the stage is hovered. */
+.screen {
+  transition: background-position 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.stage:hover .screen {
+  background-position: 50% 100% !important;
+  transition: background-position var(--dur, 9s) cubic-bezier(0.45, 0, 0.55, 1);
+}

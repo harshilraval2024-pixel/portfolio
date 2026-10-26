@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { About } from './components/About'
 import { CommandPalette } from './components/CommandPalette'
 import { Contact } from './components/Contact'
+import { CursorRing } from './components/Interactive'
 import { CursorAmbient } from './components/CursorAmbient'
 import { Experience } from './components/Experience'
 import { Footer } from './components/Footer'
@@ -32,6 +33,7 @@ export default function App() {
       <div className="relative min-h-screen overflow-x-hidden bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
         <ScrollProgress />
         <CursorAmbient />
+        <CursorRing />
         <div className="relative z-10">
           <Navbar onOpenPalette={() => setPalette(true)} />
           <main>

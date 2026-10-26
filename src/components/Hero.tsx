@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion'
 import { ArrowDownRight, ArrowRight, Briefcase, CalendarCheck, Download, GitCommitHorizontal, Layers, Mail, Sparkles } from 'lucide-react'
 import { profile } from '../data/profile'
+import { BinaryField } from './BinaryField'
 import { CountUp } from './CountUp'
+import { FlashText, Magnetic, Parallax } from './Interactive'
 import { ProfileCard } from './ProfileCard'
+import { TiltText } from './TiltText'
 import { Typewriter } from './Typewriter'
 
 const container = {
@@ -44,8 +47,9 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative border-b border-zinc-200/60 dark:border-zinc-800/60"
+      className="relative overflow-hidden border-b border-zinc-200/60 dark:border-zinc-800/60"
     >
+      <BinaryField />
       <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-12 sm:px-6 sm:pb-28 sm:pt-16 lg:px-8 lg:pb-32 lg:pt-20">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
           <motion.div
@@ -65,19 +69,24 @@ export function Hero() {
               variants={item}
               className="text-[2.5rem] font-semibold leading-[1.08] tracking-tight text-zinc-900 sm:text-5xl sm:leading-[1.05] lg:text-6xl lg:leading-[1.02] dark:text-white"
             >
-              <span className="block text-zinc-500 dark:text-zinc-500">Harshil Raval</span>
-              <span className="mt-1 block text-gradient">Full Stack Web Developer</span>
+              <span className="block text-zinc-500 dark:text-zinc-500">
+                <TiltText text="Harshil Raval" />
+              </span>
+              <span className="mt-1 block">
+                <TiltText text="Full Stack Web Developer" gradient />
+              </span>
             </motion.h1>
 
             <motion.p
               variants={item}
-              className="mt-5 font-mono-strict text-sm text-zinc-600 sm:text-base dark:text-zinc-400"
+              className="mt-5 w-fit font-mono-strict text-sm text-zinc-600 sm:text-base dark:text-zinc-400"
             >
-              React.js · TypeScript · Node.js
+              <FlashText>React.js · TypeScript · Node.js</FlashText>
             </motion.p>
             <motion.p
               variants={item}
-              className="mt-3 font-mono-strict text-sm text-emerald-700 dark:text-emerald-400 sm:text-base"
+              data-read
+              className="mt-3 w-fit font-mono-strict text-sm text-emerald-700 dark:text-emerald-400 sm:text-base"
             >
               <span className="text-zinc-400 dark:text-zinc-600">&gt; </span>
               I build <Typewriter phrases={phrases} />
@@ -87,15 +96,17 @@ export function Hero() {
               variants={item}
               className="mt-4 max-w-xl text-base leading-relaxed text-zinc-600 sm:text-lg dark:text-zinc-400"
             >
-              Frontend-focused developer shipping a multi-tenant workforce platform for
-              care agencies: scheduling, timesheets, invoicing and reporting, built to stay
-              fast and maintainable as the product grows.
+              <FlashText>
+                Frontend-focused developer shipping a multi-tenant workforce platform for care agencies: scheduling,
+                timesheets, invoicing and reporting, built to stay fast and maintainable as the product grows.
+              </FlashText>
             </motion.p>
 
             <motion.div
               variants={item}
               className="mt-8 flex flex-wrap items-center gap-3"
             >
+              <Magnetic>
               <a
                 href="#projects"
                 className="group inline-flex items-center gap-2 rounded-full bg-zinc-900 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-zinc-900/25 transition-all hover:-translate-y-0.5 hover:bg-zinc-800 dark:bg-white dark:text-zinc-950 dark:shadow-white/10 dark:hover:bg-zinc-100"
@@ -103,6 +114,8 @@ export function Hero() {
                 View projects
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </a>
+              </Magnetic>
+              <Magnetic>
               <a
                 href="#contact"
                 className="inline-flex items-center gap-2 rounded-full border border-zinc-300/90 bg-white/80 px-6 py-3.5 text-sm font-semibold text-zinc-800 shadow-sm backdrop-blur transition-all hover:-translate-y-0.5 hover:border-emerald-500/50 hover:text-emerald-800 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-100 dark:hover:border-emerald-500/40 dark:hover:text-emerald-300"
@@ -110,6 +123,7 @@ export function Hero() {
                 Contact
                 <ArrowDownRight className="h-4 w-4 opacity-70" />
               </a>
+              </Magnetic>
               <a
                 href={profile.resume}
                 target="_blank"
@@ -141,7 +155,9 @@ export function Hero() {
             transition={{ duration: 0.55, delay: 0.2 }}
             className="relative lg:col-span-5"
           >
-            <ProfileCard />
+            <Parallax depth={16}>
+              <ProfileCard />
+            </Parallax>
           </motion.div>
         </div>
 
