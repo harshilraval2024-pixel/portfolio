@@ -1,9 +1,22 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { Bot, Building2, CalendarClock, ChevronDown, Network, Shield } from 'lucide-react'
+import { Bot, Building2, CalendarClock, ChevronDown, Network, Shield, type LucideIcon } from 'lucide-react'
 import { useState, type MouseEvent } from 'react'
 import { SectionHeading } from './SectionHeading'
+import { Showcase } from './Showcase'
 
-const projects = [
+interface Project {
+  group: '20x' | 'earlier'
+  brand: string
+  title: string
+  subtitle: string
+  summary: string
+  highlights: readonly string[]
+  stack: readonly string[]
+  gradient: string
+  icon: LucideIcon
+}
+
+const projects: Project[] = [
   {
     group: '20x',
     brand: '20x',
@@ -78,7 +91,7 @@ const projects = [
     gradient: 'from-amber-500 via-orange-500 to-rose-600',
     icon: Network,
   },
-] as const
+]
 
 const tabs = [
   { id: 'all', label: 'All' },
@@ -113,8 +126,12 @@ export function Projects() {
           index="05"
           kicker="Projects"
           title="Shipped products & platforms"
-          subtitle="Two products on the 20x care platform, plus earlier work on real-time chat, access control and data visualization."
+          subtitle="Client websites for a solar company and a children's hospital, two products on the 20x care platform, plus earlier work on real-time chat, access control and data visualization."
         />
+
+        <div className="mt-10">
+          <Showcase />
+        </div>
 
         <div role="tablist" aria-label="Filter projects" className="mt-10 flex flex-wrap gap-2">
           {tabs.map((t) => (
